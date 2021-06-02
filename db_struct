@@ -1,0 +1,21 @@
+       Column         |            Type             | Collation | Nullable |                Default                
+-----------------------+-----------------------------+-----------+----------+---------------------------------------
+ id                    | integer                     |           | not null | nextval('customers_id_seq'::regclass)
+ name                  | text                        |           | not null | 
+ email                 | text                        |           | not null | 
+ password              | text                        |           | not null | 
+ last_signin_attempt   | timestamp without time zone |           |          | 
+ failed_signin_attempt | integer                     |           |          | 
+ task_group_id         | integer                     |           |          | 
+Indexes:
+    "customers_pkey" PRIMARY KEY, btree (id)
+
+
+                               Table "public.tasks"
+   Column    |  Type   | Collation | Nullable |              Default              
+-------------+---------+-----------+----------+-----------------------------------
+ id          | integer |           | not null | nextval('tasks_id_seq'::regclass)
+ group_id    | integer |           | not null | 
+ description | text    |           | not null | 
+Indexes:
+    "tasks_pkey" PRIMARY KEY, btree (id)

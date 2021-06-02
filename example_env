@@ -1,0 +1,7 @@
+export FLASK_APP=app.py
+export DB_NAME="flask_db"
+export DB_PASSWORD="secret"
+export DB_USER="db_user"
+export DB_HOST="localhost"
+export JWT_SECRET="super secret"
+
