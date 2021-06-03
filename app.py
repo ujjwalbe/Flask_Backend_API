@@ -114,9 +114,7 @@ class PasswordHasher:
         return hashed_password
 	# Compares password with hashed
     def validated_password(self, password, hashed):
-        hash = hashlib.sha256()
-        hash.update(bytes(password, "utf-8"))
-        hashed_password = hash.hexdigest()
+        hashed_password = self.hash_password(password)
         if hashed == hashed_password:
             return True
         return False
