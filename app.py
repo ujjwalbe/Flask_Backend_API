@@ -15,6 +15,7 @@ import random
 import datetime
 import jwt
 import json
+import re
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ database_password = os.environ["DB_PASSWORD"]
 database_host = os.environ["DB_HOST"]
 jwt_secret = os.environ["JWT_SECRET"]
 
-
+reg = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$"
 # JWT Validation and Generation
 class JwtValidation:
     def encode(self, payload):
@@ -143,11 +144,18 @@ def register_user():
         )
 
     data = request.get_json()
-    full_name = data.get("name", None)
+    full_name = str(data.get("name", None))
     password = data.get("password", None)
     email = data.get("email", None)
+
     # If no password and email is given returns invalid response
     if email is None and password is None:
+        return (
+            jsonify({"error_message": "Invalid email.", "error_name": "bad_request"}),
+            400,
+        )
+    
+    if not re.match(reg, str(email)):
         return (
             jsonify({"error_message": "Invalid email.", "error_name": "bad_request"}),
             400,
